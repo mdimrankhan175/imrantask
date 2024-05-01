@@ -31,6 +31,20 @@ class App extends Component {
     });
   };
 
+  // Function to update task status
+  updateTaskStatus = (taskId, newStatus) => {
+    // Find the task in taskList and update its status
+    const updatedTaskList = this.state.taskList.map(task => {
+      if (task.id === taskId) {
+        return { ...task, status: newStatus };
+      }
+      return task;
+    });
+
+    // Update the state with the modified task list
+    this.setState({ taskList: updatedTaskList });
+  };
+
   // Function to calculate the status list based on task list
   calculateStatusList = () => {
     const { taskList } = this.state;
@@ -60,7 +74,7 @@ class App extends Component {
     return (
       <div className="App">
         <TaskForm addTask={this.addTask} />
-        <TaskList taskList={taskList} activeTag={activeTag} deleteTask={this.deleteTask} />
+        <TaskList taskList={taskList} activeTag={activeTag} deleteTask={this.deleteTask} updateTaskStatus={this.updateTaskStatus} />
         <SummaryPage statusList={statusList} /> {/* Pass statusList as prop */}
       </div>
     );
